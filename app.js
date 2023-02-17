@@ -9,18 +9,10 @@ class Book{
 
 // UI Class: Handle UI Tasks
 class UI{
-    static displayBooks(){
-        const StroredBooks = [
-            {title:'Book one',
-            author:'John Doe',
-            isbn:'34344334'},
-            {title:'Book two',
-            author:'John Doe',
-            isbn:'45545'}
-        ];
-        const books = StroredBooks;
+    static displayBooks() {
 
-        books.forEach((book) => UI.addBookToList(book));
+            const books = Store.getBooks();
+            books.forEach((book) => UI.addBookToList(book));
     }
 
     static addBookToList(book){
@@ -36,7 +28,6 @@ class UI{
         `;
 
         list.appendChild(row);
-        
     }
 
     static deleteBookFromList(el){
@@ -48,10 +39,11 @@ class UI{
 
     static showAlert(message,className){
         const div = document.createElement('div');
-        div.className = 'alert alert-${className}';
+        div.className = `alert alert-${className}`;
         div.appendChild(document.createTextNode(message));
         const container = document.querySelector('.container');
         const form = document.querySelector('#book-form');
+        container.insertBefore(div, form)
     }
 
     static clearFields(){
@@ -79,7 +71,7 @@ document.querySelector('#book-form').addEventListener('submit',(e)=> {
 
     // Validate
     if(title === '' || author === '' || isbn === ''){
-        alet('Please fill in all fields')
+        UI.showalert('Please fill in all fields')
     } else{
 
         // Instatiete book
